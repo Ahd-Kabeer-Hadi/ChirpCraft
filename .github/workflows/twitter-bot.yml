@@ -3,7 +3,7 @@ name: Auto Tweet Using AI
 on:
   schedule:
     # Run every 30 minutes
-    - cron: '*/30 * * * *'
+    - cron: "*/30 * * * *"
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -24,8 +24,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Or your required Node.js version
-          cache: 'npm' # Enable caching based on package-lock.json
+          node-version: "20" # Or your required Node.js version
+          cache: "npm" # Enable caching based on package-lock.json
 
       - name: Install dependencies
         run: npm ci # Use ci for faster, reliable installs based on lock file
@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tweeting script
         # Run the script, passing secrets securely as environment variables
-        run: node dist/indexed.js # Ensure this is the correct path to your compiled main file
+        run: node dist/index.js # Ensure this is the correct path to your compiled main file
         env:
           # These secrets MUST be configured in your GitHub repository settings
           # Settings > Secrets and variables > Actions > New repository secret
