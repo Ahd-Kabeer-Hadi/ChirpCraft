@@ -1,67 +1,104 @@
-name: Auto Tweet Using AI
+# .github/workflows/twitter-bot.yml
+
+name: ChirpCraft AI Twitter Bot
 
 on:
   schedule:
-    # Run every 30 minutes
-    - cron: "*/30 * * * *"
-  workflow_dispatch: # Allows manual triggering
+    # Run the main tweeting job every 30 minutes
+    - cron: '*/30 * * * *'
+    # Run the state reset job once a week (e.g., Sunday at 00:05 UTC)
+    # Note: Separate cron ensures jobs don't clash over state file easily
+    - cron: '5 0 * * 0' # 5 minutes past midnight on Sunday
+  workflow_dispatch: # Allows manual triggering of ALL jobs defined below
 
 jobs:
+  # --- Job to Post Tweets/Threads ---
   tweet:
+    name: Post Content
+    # Run this job ONLY on the 30-minute schedule or manual dispatch, NOT the weekly one
+    if: github.event.schedule != '5 0 * * 0' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    # Prevent multiple instances of this workflow from running concurrently for the same branch
+    permissions:
+      contents: write # Allow workflow to write back to the repository (for state.json)
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      # Prevent multiple tweet posting runs at the same time
+      group: ${{ github.workflow }}-tweet-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        # Fetch full history needed for checking diffs and pushing later
         with:
-          fetch-depth: 0 # Required to compare against origin/main or similar
+          fetch-depth: 0 # Needed for checking diffs and pushing
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # Or your required Node.js version
-          cache: "npm" # Enable caching based on package-lock.json
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci # Use ci for faster, reliable installs based on lock file
+        run: npm ci
 
       - name: Build TypeScript
-        run: npm run build # Assumes you have a "build" script in package.json
+        run: npm run build # Creates dist/ directory
 
       - name: Run tweeting script
-        # Run the script, passing secrets securely as environment variables
-        run: node dist/index.js # Ensure this is the correct path to your compiled main file
+        # Use the CORRECT compiled file name: index.js
+        run: node dist/index.js
         env:
-          # These secrets MUST be configured in your GitHub repository settings
-          # Settings > Secrets and variables > Actions > New repository secret
+          # Load secrets securely
           TW_APP_KEY: ${{ secrets.TW_APP_KEY }}
           TW_APP_SECRET: ${{ secrets.TW_APP_SECRET }}
           TW_ACCESS_TOKEN: ${{ secrets.TW_ACCESS_TOKEN }}
           TW_ACCESS_SECRET: ${{ secrets.TW_ACCESS_SECRET }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          BOT_HANDLE: ${{ secrets.BOT_HANDLE }} # Also add as a secret
+          BOT_HANDLE: ${{ secrets.BOT_HANDLE }}
+          BOT_USER_ID: ${{ secrets.BOT_USER_ID }} # If using the listener part
 
       - name: Configure Git
-        # Configure git user for committing the state file
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Commit and push state changes
-        # Check if state.json was modified, commit and push if it was
         run: |
-          # Check if state.json exists and has changes compared to the checked-out version
-          if [[ -f ./state.json ]] && ! git diff --quiet ./state.json; then
+          # Check if state.json exists and has changes
+          if [[ -f ./state.json ]] && ! git diff --quiet HEAD ./state.json; then
             echo "Changes detected in state.json. Committing..."
             git add ./state.json
+            # Add [skip ci] to prevent triggering workflows that run on push
             git commit -m "Update state.json [skip ci]" -m "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            git push origin ${{ github.ref_name }} # Push to the same branch the workflow ran on
+            # Push to the branch the workflow ran on (e.g., main)
+            git push origin ${{ github.ref_name }}
           else
             echo "No changes detected in state.json or file does not exist."
           fi
-        # Consider adding error handling for the push if needed (e.g., retries)
+
+  # --- Job to Reset State Weekly ---
+  reset_state:
+    name: Reset Weekly State
+    # Run this job ONLY on the weekly schedule
+    if: github.event.schedule == '5 0 * * 0'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push the reset state file
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Reset state.json
+        run: echo "{}" > ./state.json # Overwrite file with empty JSON object
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push reset state
+        run: |
+          # Always commit the reset file (diff check not needed)
+          git add ./state.json
+          git commit -m "Reset state.json for the week [skip ci]" -m "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git push origin ${{ github.ref_name }}
