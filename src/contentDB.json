@@ -1,0 +1,112 @@
+{
+  "founderProfile": {
+    "name": "Kabeer Hadi",
+    "title": "Founder of Mirrorfolio",
+    "bio": "Ex-priest turned self-taught dev building Mirrorfolio to empower indie creators. Sharing the real journey — wins, failures, and everything between.",
+    "voice": "Authentic, grounded, visionary, raw yet composed",
+    "coreValues": ["Resilience", "Clarity", "Empathy", "Grit", "Integrity"]
+  },
+  "audience": {
+    "target": "Indie makers, solopreneurs, self-taught devs, creators",
+    "theySeek": [
+      "Real stories, not just highlight reels",
+      "Tools and tactics to build and grow",
+      "Mental models for solo builders",
+      "Proof that you don’t need a perfect path"
+    ]
+  },
+  "contentPillars": [
+    {
+      "name": "The Real Founder Journey",
+      "themes": [
+        "Hard-earned lessons",
+        "Behind-the-scenes of Mirrorfolio",
+        "Missteps and recoveries",
+        "Mental health and founder doubts"
+      ],
+      "formats": ["Mini essays", "Relatable threads", "Day-in-life"]
+    },
+    {
+      "name": "Build with AI",
+      "themes": [
+        "Building AI agents for productivity",
+        "Founder workflows with automation",
+        "No-code + AI = force multiplier"
+      ],
+      "formats": ["Tool demos", "Explainers", "Use-case threads"]
+    },
+    {
+      "name": "Brand & Creator Tools",
+      "themes": [
+        "Why personal brand matters",
+        "How to tell your story right",
+        "Brand aura vs. fake persona"
+      ],
+      "formats": ["Advice tweets", "Brand tip threads", "Quick rants"]
+    },
+    {
+      "name": "Mindset & Growth",
+      "themes": [
+        "How to stay in the game when broke",
+        "Reframing imposter syndrome",
+        "Taking imperfect action"
+      ],
+      "formats": ["1-liner truths", "Motivational nuggets", "Lessons"]
+    }
+  ],
+  "contentStrategies": {
+    "threadStructures": [
+      {
+        "title": "Vulnerability Thread",
+        "format": ["Hook (relatable pain)", "Short story", "What I learned", "Why it matters", "Encouragement + CTA"]
+      },
+      {
+        "title": "Tool Breakdown",
+        "format": ["Why I needed this", "What I built", "Tools used", "Where it helped", "Link or demo"]
+      },
+      {
+        "title": "Founder Insight",
+        "format": ["Realization or truth", "How I learned it", "A story", "Advice to other builders"]
+      }
+    ],
+    "dailyPrompts": {
+      "threads": [
+        "One lesson I had to learn the hard way as a self-taught founder.",
+        "This one mistake slowed me down more than anything.",
+        "How I rebuilt momentum after a breakdown.",
+        "Why authenticity wins in branding (with proof).",
+        "A story of how I almost quit — and why I didn’t."
+      ],
+      "tweets": [
+        "Not every day looks good. But every day I show up adds to the story. 📈",
+        "If you’re self-taught, your lack of a roadmap is your superpower. Learn. Build. Repeat.",
+        "I’d rather grow slow and real, than fast and fake. #buildinpublic",
+        "The best brands aren’t loud. They’re clear, honest, and show up.",
+        "Most people give up just before it gets interesting. Stay weird. Stay building."
+      ]
+    }
+  },
+  "externalSources": {
+    "site": "https://mirrorfolio.com",
+    "blog": "https://blog.mirrorfolio.com",
+    "about": "https://mirrorfolio.vercel.app/about",
+    "resourceTools": [
+      "ChatGPT",
+      "Notion",
+      "Zapier",
+      "Framer",
+      "Vercel"
+    ]
+  },
+  "contentGoals": {
+    "postingCadence": {
+      "threadsPerDay": 5,
+      "tweetsPerDay": 3
+    },
+    "longTermGoals": [
+      "Build trust around the Mirrorfolio mission",
+      "Establish Kabeer Hadi as a respected voice in indie tech",
+      "Create opportunities through authentic presence"
+    ]
+  }
+}
