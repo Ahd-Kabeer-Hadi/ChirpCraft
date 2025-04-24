@@ -200,7 +200,7 @@ async function postThread(): Promise<boolean> {
 async function runTask() {
   console.log(`\n🚀 Starting content task for ${todayKey}...`);
   // Uses camelCase accessors for db object
-  const { threadsPerDay = 0, tweetsPerDay = 0 } = db.contentGoals?.postingCadence || {};
+  const { threadsPerDay = 5, tweetsPerDay = 5 } = db.contentGoals?.postingCadence || {};
   const counters = state[todayKey];
 
   console.log(`📊 Daily Quota: ${threadsPerDay} threads, ${tweetsPerDay} tweets.`);
