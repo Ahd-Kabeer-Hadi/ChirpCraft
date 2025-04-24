@@ -12,9 +12,9 @@ const AI_CHAR_LIMIT = MAX_TWEET_LENGTH - CHAR_LIMIT_BUFFER;
 
 // --- Configuration & Initialization ---
 const ai = new AIClient();
-
-const dbPath = path.resolve(__dirname, 'contentDB.json');
-const statePath = path.resolve(__dirname, 'state.json');
+const projectRoot = path.resolve(__dirname, '..');
+const dbPath = path.resolve(projectRoot, 'contentDB.json');
+const statePath = path.resolve(projectRoot, 'state.json');
 let db: DBSchema;
 let state: Record<string, { threads: number; tweets: number }>;
 
