@@ -38,7 +38,7 @@
 - **Content Strategy Driven**  
   Centralize audience, pillars, voice, cadence & goals in a single JSON (`contentDB.json`).  
 - **Interactive Setup**  
-  Use the built-in CLI generator (`contentDbGenerator.ts`) to bootstrap your strategy file.  
+  Use the built-in CLI generator (`contentDbGenerator.ts`) to bootstrap your strategy file.(coming soon)  
 - **GitHub Actions**  
   Cron-driven workflow to build, run & push state updates every 30 minutes.  
 - **State Persistence**  
