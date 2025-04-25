@@ -1,7 +1,7 @@
-import { twitterClient } from './twitterClient'; // Assuming this is initialized v2 client
-import { AIClient } from './aiClient';
-import { ETwitterStreamEvent, TweetV2, UserV2 } from 'twitter-api-v2'; // Import necessary types
-import { config } from 'dotenv';
+import { twitterClient } from "./twitterClient"; // Assuming this is initialized v2 client
+import { AIClient } from "./aiClient";
+import { ETwitterStreamEvent, TweetV2, UserV2 } from "twitter-api-v2"; // Import necessary types
+import { config } from "dotenv";
 
 config(); // Load .env variables
 
@@ -19,15 +19,20 @@ if (!BOT_HANDLE) {
   throw new Error("BOT_HANDLE environment variable is not set.");
 }
 if (!BOT_USER_ID) {
-  throw new Error("BOT_USER_ID environment variable is not set. Needed to prevent self-replies.");
+  throw new Error(
+    "BOT_USER_ID environment variable is not set. Needed to prevent self-replies."
+  );
 }
 
-const BOT_MENTION_RULE = { value: `@${BOT_HANDLE}`, tag: `mention-${BOT_HANDLE}` };
+const BOT_MENTION_RULE = {
+  value: `@${BOT_HANDLE}`,
+  tag: `mention-${BOT_HANDLE}`,
+};
 const MAX_REPLIES_PER_TWEET = 15; // Define as a constant
 const MAX_TWEET_LENGTH = 280; // Twitter's character limit
 
 async function setupStreamRules() {
-  console.log('Setting up stream rules...');
+  console.log("Setting up stream rules...");
   try {
     // Get existing rules
     const rules = await twitterClient.streamRules();
@@ -35,10 +40,10 @@ async function setupStreamRules() {
     // Delete existing rules tagged for this bot (optional, good for clean start)
     if (rules.data?.length) {
       const ruleIdsToDelete = rules.data
-        .filter(rule => rule.tag === BOT_MENTION_RULE.tag)
-        .map(rule => rule.id);
+        .filter((rule) => rule.tag === BOT_MENTION_RULE.tag)
+        .map((rule) => rule.id);
       if (ruleIdsToDelete.length > 0) {
-        console.log(`Deleting existing rules: ${ruleIdsToDelete.join(', ')}`);
+        console.log(`Deleting existing rules: ${ruleIdsToDelete.join(", ")}`);
         await twitterClient.updateStreamRules({
           delete: { ids: ruleIdsToDelete },
         });
@@ -50,10 +55,9 @@ async function setupStreamRules() {
     await twitterClient.updateStreamRules({
       add: [BOT_MENTION_RULE],
     });
-    console.log('Stream rules configured successfully.');
-
+    console.log("Stream rules configured successfully.");
   } catch (error) {
-    console.error('Error setting up stream rules:', error);
+    console.error("Error setting up stream rules:", error);
     throw error; // Rethrow to prevent starting the stream without rules
   }
 }
@@ -67,19 +71,27 @@ export async function listenAndReply() {
   try {
     // 2. Connect to the stream requesting user details (author_id expansion)
     const stream = await twitterClient.searchStream({
-      'tweet.fields': ['created_at', 'public_metrics'], // Optional: request useful fields
-      expansions: ['author_id'],                       // *** Request author user object ***
-      'user.fields': ['username', 'name'],             // *** Request username from user object ***
+      "tweet.fields": ["created_at", "public_metrics"], // Optional: request useful fields
+      expansions: ["author_id"], // *** Request author user object ***
+      "user.fields": ["username", "name"], // *** Request username from user object ***
     });
 
     // Enable auto-reconnect (built-in feature of the library)
     stream.autoReconnect = true;
 
     // --- Stream Event Listeners (Optional but Recommended) ---
-    stream.on(ETwitterStreamEvent.Connected, () => console.log('Stream connected.'));
-    stream.on(ETwitterStreamEvent.ConnectionError, err => console.error('Stream connection error:', err));
-    stream.on(ETwitterStreamEvent.ConnectionClosed, () => console.log('Stream connection closed.'));
-    stream.on(ETwitterStreamEvent.DataKeepAlive, () => console.log('Stream keep-alive signal received.'));
+    stream.on(ETwitterStreamEvent.Connected, () =>
+      console.log("Stream connected.")
+    );
+    stream.on(ETwitterStreamEvent.ConnectionError, (err) =>
+      console.error("Stream connection error:", err)
+    );
+    stream.on(ETwitterStreamEvent.ConnectionClosed, () =>
+      console.log("Stream connection closed.")
+    );
+    stream.on(ETwitterStreamEvent.DataKeepAlive, () =>
+      console.log("Stream keep-alive signal received.")
+    );
     // You might want more sophisticated error handling/reconnection logic here
 
     // 3. Process tweets from the stream
@@ -99,9 +111,11 @@ export async function listenAndReply() {
         }
 
         // 5. Find author's username
-        const author = users?.find(user => user.id === authorId);
+        const author = users?.find((user) => user.id === authorId);
         if (!author || !author.username) {
-          console.warn(`Could not find username for author ID: ${authorId} in tweet ${tweetId}. Skipping.`);
+          console.warn(
+            `Could not find username for author ID: ${authorId} in tweet ${tweetId}. Skipping.`
+          );
           continue;
         }
         const authorUsername = author.username;
@@ -114,39 +128,48 @@ export async function listenAndReply() {
         }
 
         // 7. Clean incoming text for the prompt (remove bot's own handle)
-        const cleanedMentionText = originalTweetText.replace(`@${BOT_HANDLE}`, '').trim();
+        const cleanedMentionText = originalTweetText
+          .replace(`@${BOT_HANDLE}`, "")
+          .trim();
         if (!cleanedMentionText) {
-          console.log(`Skipping tweet ${tweetId} as it only contained the bot mention.`);
+          console.log(
+            `Skipping tweet ${tweetId} as it only contained the bot mention.`
+          );
           continue; // Avoid replying to tweets that only mention the bot
         }
-
 
         // 8. Build prompt for AI (Improved)
         // Calculate max length for AI, leaving space for "@username " prefix and safety margin
         const prefix = `@${authorUsername} `;
         const maxAIReplyLength = MAX_TWEET_LENGTH - prefix.length - 5; // 5 chars buffer
 
-        const prompt = `You are a helpful, friendly founder (${BOT_HANDLE}) responding on Twitter. `
-          + `A user (@${authorUsername}) mentioned you, saying: "${cleanedMentionText}".\n\n`
-          + `Your task: Write a concise, empathetic, and clear reply in your authentic voice. `
-          + `IMPORTANT: Your entire response MUST be under ${maxAIReplyLength} characters. `
-          + `Do NOT include "@${authorUsername}" at the start of your response; it will be added automatically.`;
-
+        const prompt =
+          `You are a helpful, friendly founder (${BOT_HANDLE}) responding on Twitter. ` +
+          `A user (@${authorUsername}) mentioned you, saying: "${cleanedMentionText}".\n\n` +
+          `Your task: Write a concise, empathetic, and clear reply in your authentic voice. ` +
+          `IMPORTANT: Your entire response MUST be under ${maxAIReplyLength} characters. ` +
+          `Do NOT include "@${authorUsername}" at the start of your response; it will be added automatically.`;
 
         // 9. Generate reply
-        console.log(`Generating AI reply for tweet ${tweetId} from @${authorUsername}`);
+        console.log(
+          `Generating AI reply for tweet ${tweetId} from @${authorUsername}`
+        );
         let replyText = await ai.generateText(prompt); // Assuming AIClient handles its own errors
 
         // 10. Truncate AI response if needed (as a fallback)
         if (replyText.length > maxAIReplyLength) {
-            console.warn(`AI response exceeded ${maxAIReplyLength} chars. Truncating.`);
-            replyText = replyText.substring(0, maxAIReplyLength - 3) + '...'; // Add ellipsis
+          console.warn(
+            `AI response exceeded ${maxAIReplyLength} chars. Truncating.`
+          );
+          replyText = replyText.substring(0, maxAIReplyLength - 3) + "..."; // Add ellipsis
         }
-        
+
         // Ensure replyText is not empty after potential truncation or if AI failed
         if (!replyText.trim()) {
-            console.error(`AI generated an empty reply for tweet ${tweetId}. Skipping.`);
-            continue;
+          console.error(
+            `AI generated an empty reply for tweet ${tweetId}. Skipping.`
+          );
+          continue;
         }
 
         // 11. Send reply (inside a try/catch)
@@ -160,18 +183,24 @@ export async function listenAndReply() {
           // 12. Increment count ONLY on successful tweet
           replyState[tweetId]++;
         } catch (tweetError) {
-          console.error(`Failed to send reply for tweet ${tweetId}:`, tweetError);
+          console.error(
+            `Failed to send reply for tweet ${tweetId}:`,
+            tweetError
+          );
           // Do not increment reply count if tweeting failed
         }
-
       } catch (innerError) {
-          console.error('Error processing individual tweet:', innerError, 'Tweet data:', data);
-          // Continue processing next tweet from stream
+        console.error(
+          "Error processing individual tweet:",
+          innerError,
+          "Tweet data:",
+          data
+        );
+        // Continue processing next tweet from stream
       }
     } // end for await loop
-
   } catch (streamError) {
-    console.error('Fatal stream error:', streamError);
+    console.error("Fatal stream error:", streamError);
     // Consider adding retry logic or exiting gracefully
   }
 }
