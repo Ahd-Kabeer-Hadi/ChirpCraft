@@ -1,10 +1,11 @@
-import { TwitterApi } from 'twitter-api-v2';
-import { config } from 'dotenv';
+import { TwitterApi } from "twitter-api-v2";
+import { config } from "dotenv";
 
 config(); // Load .env variables
 
 // Explicitly check for required environment variables
-const { TW_APP_KEY, TW_APP_SECRET, TW_ACCESS_TOKEN, TW_ACCESS_SECRET } = process.env;
+const { TW_APP_KEY, TW_APP_SECRET, TW_ACCESS_TOKEN, TW_ACCESS_SECRET } =
+  process.env;
 
 if (!TW_APP_KEY) {
   throw new Error("Missing required environment variable: TW_APP_KEY");
