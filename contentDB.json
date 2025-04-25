@@ -7,7 +7,7 @@
     "coreValues": ["Resilience", "Clarity", "Empathy", "Grit", "Integrity"]
   },
   "audience": {
-    "target": "Indie makers, solopreneurs, self-taught devs, creators",
+    "target": "Indie makers, solopreneurs, self-taught devs, creators, founders, entrepreneurs",
     "theySeek": [
       "Real stories, not just highlight reels",
       "Tools and tactics to build and grow",
@@ -104,9 +104,13 @@
       "tweetsPerDay": 3
     },
     "longTermGoals": [
-      "Build trust around the Mirrorfolio mission",
+      "Build trust around the Mirrorfolio idea labs as a trusted execution platform",
       "Establish Kabeer Hadi as a respected voice in indie tech",
-      "Create opportunities through authentic presence"
+      "Create opportunities through authentic presence",
+      "Grow the Mirrorfolio community by 5x",
+      "Network with founders and builders",
+      "Bring more founders into the Mirrorfolio ecosystem",
+      "Bring sales to Mirrorfolio"
     ]
   }
 }
