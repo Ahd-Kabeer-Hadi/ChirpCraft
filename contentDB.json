@@ -1,18 +1,19 @@
 {
   "founderProfile": {
     "name": "Kabeer Hadi",
-    "title": "Founder of Mirrorfolio",
-    "bio": "Ex-priest turned self-taught dev building Mirrorfolio to empower indie creators. Sharing the real journey — wins, failures, and everything between.",
+    "title": "Founder of Mirrorfolio & PantrySense",
+    "bio": "Ex-priest turned self-taught dev building real-world tech for indie founders and smart living. Building with code, IoT, and AI — not chasing hype, just solving problems that matter.",
     "voice": "Authentic, grounded, visionary, raw yet composed",
     "coreValues": ["Resilience", "Clarity", "Empathy", "Grit", "Integrity"]
   },
   "audience": {
-    "target": "Indie makers, solopreneurs, self-taught devs, creators, founders, entrepreneurs",
+    "target": "Indie makers, solo tech founders, devs building real-world products, AI+IoT explorers, creators tired of superficial hustle",
     "theySeek": [
       "Real stories, not just highlight reels",
-      "Tools and tactics to build and grow",
-      "Mental models for solo builders",
-      "Proof that you don’t need a perfect path"
+      "Tactical builds that actually work",
+      "How software + hardware + AI collide",
+      "Mental models for staying in the game",
+      "Proof that you don’t need a pedigree to solve real problems"
     ]
   },
   "contentPillars": [
@@ -20,69 +21,82 @@
       "name": "The Real Founder Journey",
       "themes": [
         "Hard-earned lessons",
-        "Behind-the-scenes of Mirrorfolio",
-        "Missteps and recoveries",
-        "Mental health and founder doubts"
+        "Behind-the-scenes of Mirrorfolio and PantrySense",
+        "How I bootstrap hardware and software without funding",
+        "Mental health, self-doubt, and solo resilience"
       ],
       "formats": ["Mini essays", "Relatable threads", "Day-in-life"]
     },
     {
-      "name": "Build with AI",
+      "name": "Build with AI + Automation",
       "themes": [
-        "Building AI agents for productivity",
-        "Founder workflows with automation",
-        "No-code + AI = force multiplier"
+        "Building AI agents for real life",
+        "Integrating AI into hardware systems",
+        "Founder workflows using automation",
+        "ChatGPT + Zapier + real-world use-cases"
       ],
-      "formats": ["Tool demos", "Explainers", "Use-case threads"]
+      "formats": ["Explainers", "Mini case studies", "Tool demos", "Thread breakdowns"]
+    },
+    {
+      "name": "IoT & Software Builders’ Lab",
+      "themes": [
+        "Building from breadboards to products",
+        "No-fluff IoT lessons",
+        "Hardware + software co-design",
+        "How AI makes embedded systems smarter"
+      ],
+      "formats": ["Visual threads", "Build diaries", "1-minute build walkthroughs"]
     },
     {
       "name": "Brand & Creator Tools",
       "themes": [
-        "Why personal brand matters",
-        "How to tell your story right",
-        "Brand aura vs. fake persona"
+        "Why solo builders need personal brand",
+        "Founder-led branding done real",
+        "How storytelling scales trust",
+        "Avoiding fake persona traps"
       ],
-      "formats": ["Advice tweets", "Brand tip threads", "Quick rants"]
+      "formats": ["Advice tweets", "Brand tip threads", "Raw rants"]
     },
     {
       "name": "Mindset & Growth",
       "themes": [
-        "How to stay in the game when broke",
-        "Reframing imposter syndrome",
-        "Taking imperfect action"
+        "How to stay building when broke",
+        "Making peace with slow progress",
+        "How to think like a systems builder",
+        "Taking imperfect action daily"
       ],
-      "formats": ["1-liner truths", "Motivational nuggets", "Lessons"]
+      "formats": ["1-liner truths", "Motivational nuggets", "Mental model sketches"]
     }
   ],
   "contentStrategies": {
     "threadStructures": [
       {
-        "title": "Vulnerability Thread",
-        "format": ["Hook (relatable pain)", "Short story", "What I learned", "Why it matters", "Encouragement + CTA"]
+        "title": "Founder Breakdown",
+        "format": ["Hook (struggle or build)", "Story or moment", "Tool or insight", "Lesson", "Encouragement + CTA"]
       },
       {
-        "title": "Tool Breakdown",
-        "format": ["Why I needed this", "What I built", "Tools used", "Where it helped", "Link or demo"]
+        "title": "AI + IoT Buildlog",
+        "format": ["Problem I faced", "What I built", "Stack + tools", "What worked / What broke", "What's next"]
       },
       {
-        "title": "Founder Insight",
-        "format": ["Realization or truth", "How I learned it", "A story", "Advice to other builders"]
+        "title": "Realization Thread",
+        "format": ["What I believed before", "What changed my mind", "The new mental model", "Impact it had", "What I’d tell others"]
       }
     ],
     "dailyPrompts": {
       "threads": [
-        "One lesson I had to learn the hard way as a self-taught founder.",
-        "This one mistake slowed me down more than anything.",
-        "How I rebuilt momentum after a breakdown.",
-        "Why authenticity wins in branding (with proof).",
-        "A story of how I almost quit — and why I didn’t."
+        "How I’m combining software, AI, and IoT to solve boring but painful problems.",
+        "What most people get wrong about building hardware-first startups.",
+        "One small automation that saved me hours as a founder.",
+        "How I taught myself to go from priesthood to code and AI.",
+        "My approach to designing tech that respects people — not just metrics."
       ],
       "tweets": [
-        "Not every day looks good. But every day I show up adds to the story. 📈",
-        "If you’re self-taught, your lack of a roadmap is your superpower. Learn. Build. Repeat.",
-        "I’d rather grow slow and real, than fast and fake. #buildinpublic",
-        "The best brands aren’t loud. They’re clear, honest, and show up.",
-        "Most people give up just before it gets interesting. Stay weird. Stay building."
+        "The most underrated tech founders? Hardware + software solo devs. No VC, just value.",
+        "If you’re bootstrapping IoT, build the pain first. Tech comes later.",
+        "You don’t need to go viral. You need to stay useful — for years.",
+        "The future isn’t just AI. It’s AI + sensors + systems that respect the real world.",
+        "Every broken prototype is one step closer to a system that actually works. Keep building."
       ]
     }
   },
@@ -95,22 +109,26 @@
       "Notion",
       "Zapier",
       "Framer",
-      "Vercel"
+      "Vercel",
+      "Raspberry Pi",
+      "ESP32",
+      "Blynk",
+      "PlatformIO"
     ]
   },
   "contentGoals": {
     "postingCadence": {
-      "threadsPerDay": 5,
+      "threadsPerDay": 4,
       "tweetsPerDay": 3
     },
     "longTermGoals": [
-      "Build trust around the Mirrorfolio idea labs as a trusted execution platform",
-      "Establish Kabeer Hadi as a respected voice in indie tech",
-      "Create opportunities through authentic presence",
-      "Grow the Mirrorfolio community by 5x",
-      "Network with founders and builders",
-      "Bring more founders into the Mirrorfolio ecosystem",
-      "Bring sales to Mirrorfolio"
+      "Build trust around Mirrorfolio as a real founder’s lab — not just a brand studio",
+      "Grow interest in PantrySense as a real-world AI + IoT product",
+      "Attract builders, engineers, and thinkers into the ecosystem",
+      "Share usable frameworks for hardware-software founders",
+      "Open doors to founder-centric collabs and alpha users",
+      "Slowly build a tribe of deep-tech indie hackers who care about integrity",
+      "Stay real, even when scaling"
     ]
   }
 }
