@@ -26,11 +26,11 @@ export class AIClient {
     this.client = new GoogleGenerativeAI(apiKey);
 
     // --- Configuration Defaults ---
-    const modelName = options?.modelName ?? "gemini-1.5-flash";
+    const modelName = options?.modelName ?? "gemini-1.5-flash-latest";
     const generationConfig = options?.generationConfig ?? {
       // Common defaults - adjust as needed
-      // temperature: 0.7,
-      maxOutputTokens: 400, // Default max output, can be adjusted
+      temperature: 0.8, // Slightly higher for more creative, engaging tweets.
+      maxOutputTokens: 280,// Default max output, can be adjusted
       // topK: 40,
       // topP: 0.95,
     };
