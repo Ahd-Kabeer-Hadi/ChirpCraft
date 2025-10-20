@@ -81,6 +81,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Reset state.json
         run: echo "{}" > ./state.json
@@ -92,6 +94,12 @@ jobs:
 
       - name: Commit and push reset state
         run: |
-          git add ./state.json
-          git commit -m "Reset state.json for the week [skip ci]" -m "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          git push origin ${{ github.ref_name }}
+          # Only commit if state.json is different from HEAD
+          if [[ -f ./state.json ]] && ! git diff --quiet HEAD ./state.json; then
+            echo "state.json changed. Committing reset..."
+            git add ./state.json
+            git commit -m "Reset state.json for the week [skip ci]" -m "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            git push origin ${{ github.ref_name }}
+          else
+            echo "No changes to commit (state.json already up-to-date)."
+          fi
